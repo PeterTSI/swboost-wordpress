@@ -211,6 +211,22 @@ EOPHP
               --admin_password="$WORDPRESS_ADMIN_PASSWORD" \
               --skip-email
 
+    # Run customizing of wordpress site
+    wp option --allow-root update home $WORDPRESS_HOME
+    wp option --allow-root update blogname "$WORDPRESS_SITE_TITLE"
+    wp option --allow-root update blogdescription "$WORDPRESS_SITE_DESCRIPTION"
+    wp theme --allow-root install $WORDPRESS_ACTIVE_THEME --force --activate
+    wp plugin --allow-root install woocommerce --activate
+    wp plugin --allow-root install all-in-one-seo-pack --activate
+    wp plugin --allow-root install w3-total-cache --activate
+    wp plugin --allow-root install contact-form-7 --activate
+    wp plugin --allow-root install google-sitemap-generator --activate
+    wp plugin --allow-root install really-simple-captcha --activate
+    wp plugin --allow-root install wordfence --activate
+    wp plugin --allow-root install wp-simple-firewall --activate
+    wp plugin --allow-root install all-in-one-wp-security-and-firewall --activate
+    wp plugin --allow-root install http-headers --activate
+
     # now that we're definitely done writing configuration, let's clear out the relevant envrionment variables (so that stray "phpinfo()" calls don't leak secrets from our code)
     for e in "${envs[@]}"; do
         unset "$e"
