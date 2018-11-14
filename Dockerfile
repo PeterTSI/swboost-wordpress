@@ -39,7 +39,7 @@ RUN { \
         echo 'opcache.enable_cli=1'; \
     } > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
-RUN a2enmod rewrite expires
+RUN a2enmod rewrite expires headers
 
 # Add wp cli
 RUN curl -o /usr/local/bin/wp -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
@@ -64,4 +64,4 @@ ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["apache2-foreground"]
 
 # Add our custom content, basic theme in this sample
-ADD --chown=www-data:www-data ./theme /var/www/html/wp-content/themes/my-theme
+# ADD --chown=www-data:www-data ./theme /var/www/html/wp-content/themes/my-theme
